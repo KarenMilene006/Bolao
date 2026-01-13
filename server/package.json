@@ -4,5 +4,13 @@
     "dev:frontend": "vite",
     "dev:backend": "node server/index.js",
     "dev:backend:watch": "nodemon server/index.js"
-  }
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
