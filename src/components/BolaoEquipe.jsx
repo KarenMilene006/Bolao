@@ -237,7 +237,7 @@ export const BolaoEquipe = () => {
   if (loading) return <div className="p-4">Carregando bolão...</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 px-4 py-8">
+    <div className="min-h-screen bg-linear-to-b from-white to-gray-50 px-4 py-8">
       <h1 className="text-center text-4xl md:text-5xl font-extrabold tracking-wide text-purple-800">
         BOLÃO RODADA {rodada} <span className="font-semibold">(Equipe)</span>
       </h1>
@@ -271,9 +271,9 @@ export const BolaoEquipe = () => {
       {/* tabela */}
       <div className="mt-10 max-w-6xl mx-auto rounded-2xl bg-white shadow-xl border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-[980px] w-full">
+          <table className="min-w-245 w-full">
             <thead>
-              <tr className="bg-gradient-to-r from-purple-100 to-purple-50 text-gray-900">
+              <tr className="bg-linear-to-r from-purple-100 to-purple-50 text-gray-900">
                 <th className="px-6 py-5 text-left font-extrabold uppercase tracking-wide">
                   Participante
                 </th>
@@ -380,7 +380,7 @@ export const BolaoEquipe = () => {
               })}
 
               {/* placar final */}
-              <tr className="border-t-4 border-purple-600 bg-gradient-to-r from-purple-100 to-purple-50">
+              <tr className="border-t-4 border-purple-600 bg-linear-to-r from-purple-100 to-purple-50">
                 <td className="px-6 py-6 font-extrabold uppercase tracking-wide text-purple-800">
                   Placar Final
                 </td>

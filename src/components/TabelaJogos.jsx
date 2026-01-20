@@ -8,11 +8,14 @@ export default function Tabela() {
   useEffect(() => {
     const carregarTabela = async () => {
       try {
-        const resp = await fetch('http://localhost:3001/api/football/competitions/PL/standings', {
-          headers: {
-            "X-Auth-Token": import.meta.env.VITE_FOOTBALL_API
-          }
-        });
+        const resp = await fetch(
+          "http://localhost:3001/api/football/competitions/PL/standings",
+          {
+            headers: {
+              "X-Auth-Token": import.meta.env.VITE_FOOTBALL_API,
+            },
+          },
+        );
 
         const data = await resp.json();
 
@@ -32,52 +35,97 @@ export default function Tabela() {
     carregarTabela();
   }, []);
 
-  if (carregando) return <p className="text-zinc-300">Carregando tabela...</p>;
+  if (carregando) return <p className="text-zinc-600">Carregando tabela...</p>;
   if (erro) return <p className="text-red-500">{erro}</p>;
 
   return (
-    <div className="bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-white w-full max-w-3xl mx-auto">
-      <h2 className="text-xl font-semibold mb-3">Tabela Premier League</h2>
+    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-zinc-200 bg-white shadow-sm">
+      <div className="px-5 pt-5 pb-3">
+        <h2 className="text-lg font-semibold text-zinc-900">
+          Tabela Premier League
+        </h2>
+        <p className="text-sm text-zinc-500">Classificação atual</p>
+      </div>
 
-      <table className="w-full text-sm">
-        <thead className="text-zinc-400 border-b border-zinc-600">
-          <tr>
-            <th className="py-2 text-left">#</th>
-            <th className="text-left">Clube</th>
-            <th>P</th>
-            <th>J</th>
-            <th>V</th>
-            <th>E</th>
-            <th>D</th>
-            <th>SG</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {tabela.map((item) => (
-            <tr
-              key={item.team.id}
-              className="border-b border-zinc-700 text-center"
-            >
-              <td className="py-2">{item.position}</td>
-              <td className="text-left flex items-center gap-2">
-                <img
-                  src={item.team.crest}
-                  alt={item.team.name}
-                  className="w-5 h-5"
-                />
-                {item.team.shortName}
-              </td>
-              <td>{item.points}</td>
-              <td>{item.playedGames}</td>
-              <td>{item.won}</td>
-              <td>{item.draw}</td>
-              <td>{item.lost}</td>
-              <td>{item.goalDifference}</td>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-zinc-50 text-zinc-600 border-y border-zinc-200">
+            <tr>
+              <th className="py-3 px-4 text-left w-17.5">#</th>
+              <th className="py-3 px-4 text-left">Clube</th>
+              <th className="py-3 px-2 text-center">P</th>
+              <th className="py-3 px-2 text-center">J</th>
+              <th className="py-3 px-2 text-center">V</th>
+              <th className="py-3 px-2 text-center">E</th>
+              <th className="py-3 px-2 text-center">D</th>
+              <th className="py-3 px-2 text-center">SG</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody className="divide-y divide-zinc-100">
+            {tabela.map((item) => {
+              const top5 = item.position <= 5;
+
+              return (
+                <tr
+                  key={item.team.id}
+                  className="hover:bg-zinc-50 transition-colors"
+                >
+                  {/* POSIÇÃO com bolinha verde nos 5 primeiros */}
+                  <td className="py-3 px-4 text-left">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={[
+                          "inline-flex h-2.5 w-2.5 rounded-full",
+                          top5 ? "bg-emerald-500" : "bg-transparent",
+                        ].join(" ")}
+                      />
+                      <span className="font-medium text-zinc-900">
+                        {item.position}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* CLUBE */}
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={item.team.crest}
+                        alt={item.team.name}
+                        className="w-5 h-5"
+                        loading="lazy"
+                      />
+                      <span className="text-zinc-900">
+                        {item.team.shortName}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* NÚMEROS */}
+                  <td className="py-3 px-2 text-center font-semibold text-zinc-900">
+                    {item.points}
+                  </td>
+                  <td className="py-3 px-2 text-center text-zinc-700">
+                    {item.playedGames}
+                  </td>
+                  <td className="py-3 px-2 text-center text-zinc-700">
+                    {item.won}
+                  </td>
+                  <td className="py-3 px-2 text-center text-zinc-700">
+                    {item.draw}
+                  </td>
+                  <td className="py-3 px-2 text-center text-zinc-700">
+                    {item.lost}
+                  </td>
+                  <td className="py-3 px-2 text-center text-zinc-700">
+                    {item.goalDifference}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
